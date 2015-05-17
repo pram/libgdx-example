@@ -2,6 +2,7 @@ package com.naughtyzombie.demo.game;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.Input.Keys;
 /**
  * Created by pram on 17/05/2015.
  */
-public class WorldController {
+public class WorldController extends InputAdapter {
     private static final String TAG = WorldController.class.getName();
 
     public Sprite[] testSprites;
@@ -22,7 +23,22 @@ public class WorldController {
         init();
     }
 
+    @Override
+    public boolean keyUp(int keycode) {
+        //Reset the game world
+        if (keycode == Keys.R) {
+            init();
+            Gdx.app.debug(TAG, "Reset Game World");
+        } else if (keycode == Keys.SPACE) {
+            //Select next sprite
+            selectedSprite = (selectedSprite + 1) % testSprites.length;
+            Gdx.app.debug(TAG, "Sprite #" + selectedSprite + " selected");
+        }
+        return false;
+    }
+
     private void init() {
+        Gdx.input.setInputProcessor(this);
         initTestObjects();
     }
 
