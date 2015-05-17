@@ -12,16 +12,22 @@ public class MyDemo extends ApplicationAdapter {
 	private WorldController worldController;
 	private WorldRenderer worldRenderer;
 
+	private boolean paused;
+
 	@Override
 	public void create() {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		worldController = new WorldController();
 		worldRenderer = new WorldRenderer(worldController);
+
+		paused = false;
 	}
 
 	@Override
 	public void render() {
-		worldController.update(Gdx.graphics.getDeltaTime());
+		if (!paused) {
+			worldController.update(Gdx.graphics.getDeltaTime());
+		}
 		Gdx.gl.glClearColor(0x64/255.0f,0x95/255.0f,0xed/255.0f,0xff/255.0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -35,12 +41,12 @@ public class MyDemo extends ApplicationAdapter {
 
 	@Override
 	public void pause() {
-		super.pause();
+		paused = true;
 	}
 
 	@Override
 	public void resume() {
-		super.resume();
+		paused = false;
 	}
 
 	@Override
