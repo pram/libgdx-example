@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 
 import com.badlogic.gdx.Input.Keys;
+import com.naughtyzombie.demo.game.util.CameraHelper;
 
 /**
  * Created by pram on 17/05/2015.
@@ -19,26 +20,15 @@ public class WorldController extends InputAdapter {
     public Sprite[] testSprites;
     public int selectedSprite;
 
+    public CameraHelper cameraHelper;
+
     public WorldController() {
         init();
     }
 
-    @Override
-    public boolean keyUp(int keycode) {
-        //Reset the game world
-        if (keycode == Keys.R) {
-            init();
-            Gdx.app.debug(TAG, "Reset Game World");
-        } else if (keycode == Keys.SPACE) {
-            //Select next sprite
-            selectedSprite = (selectedSprite + 1) % testSprites.length;
-            Gdx.app.debug(TAG, "Sprite #" + selectedSprite + " selected");
-        }
-        return false;
-    }
-
     private void init() {
         Gdx.input.setInputProcessor(this);
+        cameraHelper = new CameraHelper();
         initTestObjects();
     }
 
@@ -87,6 +77,7 @@ public class WorldController extends InputAdapter {
     public void update(float deltaTime) {
         handleDebugInput(deltaTime);
         updateTestObjects(deltaTime);
+        cameraHelper.update(deltaTime);
     }
 
     private void handleDebugInput(float deltaTime) {
@@ -99,6 +90,30 @@ public class WorldController extends InputAdapter {
         if (Gdx.input.isKeyPressed(Keys.W)) moveSelectedSprite(0, sprMoveSpeed);
         if (Gdx.input.isKeyPressed(Keys.S)) moveSelectedSprite(0, -sprMoveSpeed);
 
+        // Camera Controls (move)
+        float camMoveSpeed = 5 * deltaTime;
+        float camMoveSpeedAccelerationFactor = 5;
+        if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) camMoveSpeed *= camMoveSpeedAccelerationFactor;
+        if (Gdx.input.isKeyPressed(Keys.LEFT)) moveCamera(-camMoveSpeed,0);
+        if (Gdx.input.isKeyPressed(Keys.RIGHT)) moveCamera(camMoveSpeed,0);
+        if (Gdx.input.isKeyPressed(Keys.UP)) moveCamera(0, camMoveSpeed);
+        if (Gdx.input.isKeyPressed(Keys.DOWN)) moveCamera(0,-camMoveSpeed);
+        if (Gdx.input.isKeyPressed(Keys.BACKSPACE)) cameraHelper.setPosition(0, 0);
+
+        // Camera Controls (zoom)
+        float camZoomSpeed = 1 * deltaTime;
+        float camZoomSpeedAccelerationFactor = 5;
+        if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) camZoomSpeed *= camZoomSpeedAccelerationFactor;
+        if (Gdx.input.isKeyPressed(Keys.COMMA)) cameraHelper.addZoom(camZoomSpeed);
+        if (Gdx.input.isKeyPressed(Keys.PERIOD)) cameraHelper.addZoom(-camZoomSpeed);
+        if (Gdx.input.isKeyPressed(Keys.SLASH)) cameraHelper.setZoom(1);
+
+    }
+
+    private void moveCamera (float x, float y) {
+        x += cameraHelper.getPosition().x;
+        y += cameraHelper.getPosition().y;
+        cameraHelper.setPosition(x, y);
     }
 
     private void moveSelectedSprite(float x, float y) {
@@ -110,5 +125,26 @@ public class WorldController extends InputAdapter {
         rotation += 90 * deltaTime;
         rotation %= 360;
         testSprites[selectedSprite].setRotation(rotation);
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        //Reset the game world
+        if (keycode == Keys.R) {
+            init();
+            Gdx.app.debug(TAG, "Reset Game World");
+        } else if (keycode == Keys.SPACE) {
+            //Select next sprite
+            selectedSprite = (selectedSprite + 1) % testSprites.length;
+            //Update camera to follow selected sprite
+            if (cameraHelper.hasTarget()) {
+                cameraHelper.setTarget(testSprites[selectedSprite]);
+            }
+            Gdx.app.debug(TAG, "Sprite #" + selectedSprite + " selected");
+        } else if (keycode == Keys.ENTER) {
+            cameraHelper.setTarget(cameraHelper.hasTarget() ? null : testSprites[selectedSprite]);
+            Gdx.app.debug(TAG, "Camera follow enabled " + cameraHelper.hasTarget());
+        }
+        return false;
     }
 }
