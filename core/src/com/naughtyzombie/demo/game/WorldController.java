@@ -40,7 +40,7 @@ public class WorldController {
             float randomX = MathUtils.random(-2.0f, 2.0f);
             float randomY = MathUtils.random(-2.0f, 2.0f);
 
-            spr.setPosition(randomX, randomX);
+            spr.setPosition(randomX, randomY);
 
             testSprites[i] = spr;
         }
