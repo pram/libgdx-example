@@ -9,4 +9,7 @@ public class Constants {
 
     //set the visible game world height in meters
     public static final float VIEWPORT_HEIGHT = 5.0f;
+
+    //Location of texture atlas
+    public static final String TEXTURE_ATLAS_OBJECTS = "images/jumpyjump.pack";
 }
