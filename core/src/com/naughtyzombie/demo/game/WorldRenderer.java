@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.naughtyzombie.demo.game.util.Constants;
+import com.naughtyzombie.demo.game.util.GamePreferences;
 
 /**
  * Created by pram on 17/05/2015.
@@ -123,7 +124,8 @@ public class WorldRenderer implements Disposable {
         // draw extra lives icon + text (anchored to top right edge)
         renderGuiExtraLive(batch);
         // draw FPS text (anchored to bottom right edge)
-        renderGuiFpsCounter(batch);
+        if (GamePreferences.instance.showFpsCounter)
+            renderGuiFpsCounter(batch);
         // draw game over text
         renderGuiGameOverMessage(batch);
         batch.end();
