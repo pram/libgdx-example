@@ -11,5 +11,5 @@ public class Constants {
     public static final float VIEWPORT_HEIGHT = 5.0f;
 
     //Location of texture atlas
-    public static final String TEXTURE_ATLAS_OBJECTS = "images/jumpyjump.pack";
+    public static final String TEXTURE_ATLAS_OBJECTS = "images/jumpyjump.pack.atlas";
 }
