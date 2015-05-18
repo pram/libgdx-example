@@ -21,6 +21,7 @@ public class DesktopLauncher {
             settings.duplicatePadding = false;
             settings.debug = drawDebugOutline;
             TexturePacker.process(settings, "../../desktop/assets-raw/images", "images", "jumpyjump.pack");
+            TexturePacker.process(settings, "../../desktop/assets-raw/images-ui", "images-ui", "jumpyjump-ui.pack");
         }
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
