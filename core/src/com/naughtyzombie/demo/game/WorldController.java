@@ -120,24 +120,25 @@ public class WorldController extends InputAdapter {
         return pixmap;
     }
 
-    public void update(float deltaTime) {
+    public void update (float deltaTime) {
         handleDebugInput(deltaTime);
         if (isGameOver()) {
             timeLeftGameOverDelay -= deltaTime;
-            if (timeLeftGameOverDelay < 0) backToMenu();
+            if (timeLeftGameOverDelay< 0) backToMenu();
         } else {
             handleInputGame(deltaTime);
         }
         level.update(deltaTime);
         testCollisions();
         cameraHelper.update(deltaTime);
-        if (!isGameOver() && isPlayerInWater()) {
+        if (!isGameOver() &&isPlayerInWater()) {
             lives--;
             if (isGameOver())
                 timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_OVER;
             else
                 initLevel();
         }
+        level.mountains.updateScrollPosition(cameraHelper.getPosition());
     }
 
     private void handleDebugInput(float deltaTime) {
