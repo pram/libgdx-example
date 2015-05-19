@@ -1,4 +1,4 @@
-package com.naughtyzombie.demo.game.util;
+package com.naughtyzombie.demo.util;
 
 /**
  * Created by pram on 17/05/2015.

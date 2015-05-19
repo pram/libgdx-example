@@ -3,13 +3,12 @@ package com.naughtyzombie.demo.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
-import com.naughtyzombie.demo.game.util.Constants;
-import com.naughtyzombie.demo.game.util.GamePreferences;
+import com.naughtyzombie.demo.util.Constants;
+import com.naughtyzombie.demo.util.GamePreferences;
 
 /**
  * Created by pram on 17/05/2015.

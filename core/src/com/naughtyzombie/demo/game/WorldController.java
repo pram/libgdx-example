@@ -11,8 +11,8 @@ import com.naughtyzombie.demo.game.objects.BunnyHead;
 import com.naughtyzombie.demo.game.objects.Feather;
 import com.naughtyzombie.demo.game.objects.GoldCoin;
 import com.naughtyzombie.demo.game.objects.Rock;
-import com.naughtyzombie.demo.game.util.CameraHelper;
-import com.naughtyzombie.demo.game.util.Constants;
+import com.naughtyzombie.demo.util.CameraHelper;
+import com.naughtyzombie.demo.util.Constants;
 import com.naughtyzombie.demo.screens.MenuScreen;
 
 /**

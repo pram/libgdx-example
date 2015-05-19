@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.naughtyzombie.demo.game.Assets;
-import com.naughtyzombie.demo.game.util.CharacterSkin;
-import com.naughtyzombie.demo.game.util.Constants;
-import com.naughtyzombie.demo.game.util.GamePreferences;
+import com.naughtyzombie.demo.util.CharacterSkin;
+import com.naughtyzombie.demo.util.Constants;
+import com.naughtyzombie.demo.util.GamePreferences;
 
 public class BunnyHead extends AbstractGameObject {
     public static final String TAG = BunnyHead.class.getName();

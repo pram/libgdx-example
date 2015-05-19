@@ -1,7 +1,6 @@
-package com.naughtyzombie.demo.game.util;
+package com.naughtyzombie.demo.util;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.naughtyzombie.demo.game.objects.AbstractGameObject;

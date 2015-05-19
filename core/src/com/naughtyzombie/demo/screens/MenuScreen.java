@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.naughtyzombie.demo.game.Assets;
-import com.naughtyzombie.demo.game.util.CharacterSkin;
-import com.naughtyzombie.demo.game.util.Constants;
-import com.naughtyzombie.demo.game.util.GamePreferences;
+import com.naughtyzombie.demo.util.CharacterSkin;
+import com.naughtyzombie.demo.util.Constants;
+import com.naughtyzombie.demo.util.GamePreferences;
 
 public class MenuScreen extends AbstractGameScreen {
     private static final String TAG = MenuScreen.class.getName();

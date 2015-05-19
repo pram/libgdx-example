@@ -16,7 +16,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 
-import com.naughtyzombie.demo.game.util.Constants;
+import com.naughtyzombie.demo.util.Constants;
 
 public class Assets implements Disposable, AssetErrorListener {
     public static final String TAG = Assets.class.getName();

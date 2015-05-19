@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.naughtyzombie.demo.game.WorldController;
 import com.naughtyzombie.demo.game.WorldRenderer;
-import com.naughtyzombie.demo.game.util.GamePreferences;
+import com.naughtyzombie.demo.util.GamePreferences;
 
 public class GameScreen extends AbstractGameScreen {
     private static final String TAG = GameScreen.class.getName();

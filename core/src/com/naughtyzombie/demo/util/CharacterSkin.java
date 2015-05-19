@@ -1,4 +1,4 @@
-package com.naughtyzombie.demo.game.util;
+package com.naughtyzombie.demo.util;
 
 import com.badlogic.gdx.graphics.Color;
 
