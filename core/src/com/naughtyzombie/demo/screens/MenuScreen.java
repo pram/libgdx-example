@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.naughtyzombie.demo.game.Assets;
+import com.naughtyzombie.demo.screens.transitions.ScreenTransitionFade;
 import com.naughtyzombie.demo.util.CharacterSkin;
 import com.naughtyzombie.demo.util.Constants;
 import com.naughtyzombie.demo.util.GamePreferences;
@@ -341,7 +342,8 @@ public class MenuScreen extends AbstractGameScreen {
     }
 
     private void onPlayClicked() {
-        game.setScreen(new GameScreen(game));
+        ScreenTransition transition = ScreenTransitionFade.init(0.75f);
+        game.setScreen(new GameScreen(game), transition);
     }
 
     private void onOptionsClicked() {
