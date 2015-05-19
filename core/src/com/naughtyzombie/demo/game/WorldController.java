@@ -32,6 +32,7 @@ public class WorldController extends InputAdapter {
     public int lives;
     public int score;
     public float livesVisual;
+    public float scoreVisual;
 
     // Rectangles for collision detection
     private Rectangle r1 = new Rectangle();
@@ -99,8 +100,9 @@ public class WorldController extends InputAdapter {
         initLevel();
     }
 
-    private void initLevel() {
+    private void initLevel () {
         score = 0;
+        scoreVisual = score;
         level = new Level(Constants.LEVEL_01);
         cameraHelper.setTarget(level.bunnyHead);
     }
@@ -126,7 +128,8 @@ public class WorldController extends InputAdapter {
         handleDebugInput(deltaTime);
         if (isGameOver()) {
             timeLeftGameOverDelay -= deltaTime;
-            if (timeLeftGameOverDelay < 0) backToMenu();
+            if (timeLeftGameOverDelay < 0)
+                backToMenu();
         } else {
             handleInputGame(deltaTime);
         }
@@ -140,10 +143,11 @@ public class WorldController extends InputAdapter {
             else
                 initLevel();
         }
-        level.mountains.updateScrollPosition
-                (cameraHelper.getPosition());
+        level.mountains.updateScrollPosition(cameraHelper.getPosition());
         if (livesVisual > lives)
             livesVisual = Math.max(lives, livesVisual - 1 * deltaTime);
+        if (scoreVisual < score)
+            scoreVisual = Math.min(score, scoreVisual + 250 * deltaTime);
     }
 
     private void handleDebugInput(float deltaTime) {
