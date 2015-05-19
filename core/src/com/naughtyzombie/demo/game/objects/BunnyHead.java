@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.naughtyzombie.demo.game.Assets;
+import com.naughtyzombie.demo.util.AudioManager;
 import com.naughtyzombie.demo.util.CharacterSkin;
 import com.naughtyzombie.demo.util.Constants;
 import com.naughtyzombie.demo.util.GamePreferences;
@@ -63,6 +65,7 @@ public class BunnyHead extends AbstractGameObject {
         switch (jumpState) {
             case GROUNDED: // Character is standing on a platform
                 if (jumpKeyPressed) {
+                    AudioManager.instance.play(Assets.instance.sounds.jump);
                     // Start counting jump time from the beginning
                     timeJumping = 0;
                     jumpState = JUMP_STATE.JUMP_RISING;
@@ -75,6 +78,7 @@ public class BunnyHead extends AbstractGameObject {
             case FALLING:// Falling down
             case JUMP_FALLING: // Falling down after jump
                 if (jumpKeyPressed && hasFeatherPowerup) {
+                    AudioManager.instance.play(Assets.instance.sounds.jumpWithFeather, 1,MathUtils.random(1.0f, 1.1f));
                     timeJumping = JUMP_TIME_OFFSET_FLYING;
                     jumpState = JUMP_STATE.JUMP_RISING;
                 }
