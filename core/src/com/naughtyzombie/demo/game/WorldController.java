@@ -6,12 +6,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.naughtyzombie.demo.game.objects.BunnyHead;
 import com.naughtyzombie.demo.game.objects.Feather;
 import com.naughtyzombie.demo.game.objects.GoldCoin;
 import com.naughtyzombie.demo.game.objects.Rock;
 import com.naughtyzombie.demo.screens.DirectedGame;
+import com.naughtyzombie.demo.screens.ScreenTransition;
+import com.naughtyzombie.demo.screens.transitions.ScreenTransitionSlide;
 import com.naughtyzombie.demo.util.CameraHelper;
 import com.naughtyzombie.demo.util.Constants;
 import com.naughtyzombie.demo.screens.MenuScreen;
@@ -45,7 +48,8 @@ public class WorldController extends InputAdapter {
 
     private void backToMenu() {
         // switch to menu screen
-        game.setScreen(new MenuScreen(game));
+        ScreenTransition transition = ScreenTransitionSlide.init(0.75f,ScreenTransitionSlide.DOWN, false, Interpolation.bounceOut);
+        game.setScreen(new MenuScreen(game), transition);
     }
 
     private void onCollisionBunnyHeadWithRock(Rock rock) {
