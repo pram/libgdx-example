@@ -1,2 +1,3 @@
 # libgdx-example
-Example LibGDX Project
+
+Implementation of the Jumpy Jumper project. An example app built using LibGDX
