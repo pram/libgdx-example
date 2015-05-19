@@ -1,9 +1,9 @@
 package com.naughtyzombie.demo.game;
 
 import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Interpolation;
@@ -14,12 +14,12 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.naughtyzombie.demo.game.objects.*;
 import com.naughtyzombie.demo.screens.DirectedGame;
+import com.naughtyzombie.demo.screens.MenuScreen;
 import com.naughtyzombie.demo.screens.ScreenTransition;
 import com.naughtyzombie.demo.screens.transitions.ScreenTransitionSlide;
 import com.naughtyzombie.demo.util.AudioManager;
 import com.naughtyzombie.demo.util.CameraHelper;
 import com.naughtyzombie.demo.util.Constants;
-import com.naughtyzombie.demo.screens.MenuScreen;
 
 /**
  * Created by pram on 17/05/2015.
@@ -50,6 +50,8 @@ public class WorldController extends InputAdapter implements Disposable {
 
     private boolean goalReached;
     public World b2world;
+
+    private boolean accelerometerAvailable;
 
     private void backToMenu() {
         // switch to menu screen
@@ -104,6 +106,7 @@ public class WorldController extends InputAdapter implements Disposable {
     }
 
     private void init() {
+        accelerometerAvailable = Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer);
         cameraHelper = new CameraHelper();
         lives = Constants.LIVES_START;
         livesVisual = lives;
@@ -111,7 +114,7 @@ public class WorldController extends InputAdapter implements Disposable {
         initLevel();
     }
 
-    private void initLevel () {
+    private void initLevel() {
         score = 0;
         scoreVisual = score;
         goalReached = false;
@@ -137,7 +140,7 @@ public class WorldController extends InputAdapter implements Disposable {
         return pixmap;
     }
 
-    public void update (float deltaTime) {
+    public void update(float deltaTime) {
         handleDebugInput(deltaTime);
         if (isGameOver() || goalReached) {
             timeLeftGameOverDelay -= deltaTime;
@@ -257,25 +260,37 @@ public class WorldController extends InputAdapter implements Disposable {
         if (cameraHelper.hasTarget(level.bunnyHead)) {
             // Player Movement
             if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-                level.bunnyHead.velocity.x =
-                        -level.bunnyHead.terminalVelocity.x;
+                level.bunnyHead.velocity.x = -level.bunnyHead.terminalVelocity.x;
             } else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-                level.bunnyHead.velocity.x =
-                        level.bunnyHead.terminalVelocity.x;
+                level.bunnyHead.velocity.x = level.bunnyHead.terminalVelocity.x;
             } else {
+                // Use accelerometer for movement if available
+                if (accelerometerAvailable) {
+                    // normalize accelerometer values from [-10, 10] to [-1, 1]
+                    // which translate to rotations of [-90, 90] degrees
+                    float amount = Gdx.input.getAccelerometerY() / 10.0f;
+                    amount *= 90.0f;
+                    // is angle of rotation inside dead zone?
+                    if (Math.abs(amount) < Constants.ACCEL_ANGLE_DEAD_ZONE) {
+                        amount = 0;
+                    } else {
+                        // use the defined max angle of rotation instead of
+                        // the full 90 degrees for maximum velocity
+                        amount /= Constants.ACCEL_MAX_ANGLE_MAX_MOVEMENT;
+                    }
+                    level.bunnyHead.velocity.x = level.bunnyHead.terminalVelocity.x * amount;
+                }
                 // Execute auto-forward movement on non-desktop platform
-                if (Gdx.app.getType() != ApplicationType.Desktop) {
-                    level.bunnyHead.velocity.x =
-                            level.bunnyHead.terminalVelocity.x;
+                else if (Gdx.app.getType() != ApplicationType.Desktop) {
+                    level.bunnyHead.velocity.x = level.bunnyHead.terminalVelocity.x;
                 }
             }
+
             // Bunny Jump
-            if (Gdx.input.isTouched() ||
-                    Gdx.input.isKeyPressed(Keys.SPACE)) {
+            if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.SPACE))
                 level.bunnyHead.setJumping(true);
-            } else {
+            else
                 level.bunnyHead.setJumping(false);
-            }
         }
     }
 
@@ -352,7 +367,7 @@ public class WorldController extends InputAdapter implements Disposable {
         }
     }
 
-    private void onCollisionBunnyWithGoal () {
+    private void onCollisionBunnyWithGoal() {
         goalReached = true;
         timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_FINISHED;
         Vector2 centerPosBunnyHead =

@@ -46,4 +46,9 @@ public class Constants {
     // Shaders
     public static final String shaderMonochromeVertex = "shaders/monochrome.vs";
     public static final String shaderMonochromeFragment = "shaders/monochrome.fs";
+
+    // Angle of rotation for dead zone (no movement)
+    public static final float ACCEL_ANGLE_DEAD_ZONE = 5.0f;
+    // Max angle of rotation needed to gain max movement velocity
+    public static final float ACCEL_MAX_ANGLE_MAX_MOVEMENT = 20.0f;
 }
