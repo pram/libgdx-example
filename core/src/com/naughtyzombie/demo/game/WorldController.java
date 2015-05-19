@@ -11,6 +11,7 @@ import com.naughtyzombie.demo.game.objects.BunnyHead;
 import com.naughtyzombie.demo.game.objects.Feather;
 import com.naughtyzombie.demo.game.objects.GoldCoin;
 import com.naughtyzombie.demo.game.objects.Rock;
+import com.naughtyzombie.demo.screens.DirectedGame;
 import com.naughtyzombie.demo.util.CameraHelper;
 import com.naughtyzombie.demo.util.Constants;
 import com.naughtyzombie.demo.screens.MenuScreen;
@@ -23,7 +24,7 @@ public class WorldController extends InputAdapter {
 
     public CameraHelper cameraHelper;
 
-    public WorldController(Game game) {
+    public WorldController(DirectedGame game) {
         this.game = game;
         init();
     }
@@ -40,7 +41,7 @@ public class WorldController extends InputAdapter {
 
     private float timeLeftGameOverDelay;
 
-    private Game game;
+    private DirectedGame game;
 
     private void backToMenu() {
         // switch to menu screen
@@ -91,8 +92,7 @@ public class WorldController extends InputAdapter {
         Gdx.app.log(TAG, "Feather collected");
     }
 
-    private void init() {
-        Gdx.input.setInputProcessor(this);
+    private void init () {
         cameraHelper = new CameraHelper();
         lives = Constants.LIVES_START;
         livesVisual = lives;

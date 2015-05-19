@@ -6,10 +6,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.naughtyzombie.demo.screens.DirectedGame;
 import com.naughtyzombie.demo.screens.MenuScreen;
 
 
-public class MyDemo extends Game {
+public class MyDemo extends DirectedGame {
 
 	@Override
 	public void create () {
