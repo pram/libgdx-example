@@ -26,7 +26,6 @@ public class BunnyHead extends AbstractGameObject {
         GROUNDED, FALLING, JUMP_RISING, JUMP_FALLING
     }
 
-    private TextureRegion regHead;
     public VIEW_DIRECTION viewDirection;
     public float timeJumping;
     public JUMP_STATE jumpState;
@@ -214,7 +213,7 @@ public class BunnyHead extends AbstractGameObject {
             batch.setColor(1.0f, 0.8f, 0.0f, 1.0f);
         }
         // Draw image
-        //reg = regHead;
+
         batch.draw(reg.getTexture(),
                 position.x, position.y,
                 origin.x, origin.y,
