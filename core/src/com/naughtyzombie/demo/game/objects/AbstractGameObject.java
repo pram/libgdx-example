@@ -4,6 +4,7 @@ package com.naughtyzombie.demo.game.objects;
  * Created by pram on 18/05/2015.
  */
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -25,6 +26,9 @@ public abstract class AbstractGameObject {
 
     public Body body;
 
+    public float stateTime;
+    public Animation animation;
+
     public AbstractGameObject() {
         position = new Vector2();
         dimension = new Vector2(1, 1);
@@ -39,6 +43,7 @@ public abstract class AbstractGameObject {
     }
 
     public void update(float deltaTime) {
+        stateTime += deltaTime;
         if (body == null) {
             updateMotionX(deltaTime);
             updateMotionY(deltaTime);
@@ -87,5 +92,10 @@ public abstract class AbstractGameObject {
         // Make sure the object's velocity does not exceed the
         // positive or negative terminal velocity
         velocity.y = MathUtils.clamp(velocity.y, -terminalVelocity.y, terminalVelocity.y);
+    }
+
+    public void setAnimation (Animation animation) {
+        this.animation = animation;
+        stateTime = 0;
     }
 }
