@@ -10,8 +10,10 @@ import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -53,7 +55,7 @@ public class Assets implements Disposable, AssetErrorListener {
         assetManager.load("sounds/pickup_feather.wav", Sound.class);
         assetManager.load("sounds/live_lost.wav", Sound.class);
         // load music
-        assetManager.load("music/keith303_-_brand_new_highscore.mp3",Music.class);
+        assetManager.load("music/keith303_-_brand_new_highscore.mp3", Music.class);
         // start loading assets and wait until finished
         assetManager.finishLoading();
         Gdx.app.debug(TAG, "# of assets loaded: "
@@ -94,9 +96,32 @@ public class Assets implements Disposable, AssetErrorListener {
 
     public class AssetBunny {
         public final AtlasRegion head;
+        public final Animation animNormal;
+        public final Animation animCopterTransform;
+        public final Animation animCopterTransformBack;
+        public final Animation animCopterRotate;
 
         public AssetBunny(TextureAtlas atlas) {
             head = atlas.findRegion("bunny_head");
+
+            Array<AtlasRegion> regions = null;
+            AtlasRegion region = null;
+            // Animation: Bunny Normal
+            regions = atlas.findRegions("anim_bunny_normal");
+            animNormal = new Animation(1.0f / 10.0f, regions,
+                    Animation.PlayMode.LOOP_PINGPONG);
+            // Animation: Bunny Copter - knot ears
+            regions = atlas.findRegions("anim_bunny_copter");
+            animCopterTransform = new Animation(1.0f / 10.0f, regions);
+            // Animation: Bunny Copter - unknot ears
+            regions = atlas.findRegions("anim_bunny_copter");
+            animCopterTransformBack = new Animation(1.0f / 10.0f, regions,
+                    Animation.PlayMode.REVERSED);
+            // Animation: Bunny Copter - rotate ears
+            regions = new Array<AtlasRegion>();
+            regions.add(atlas.findRegion("anim_bunny_copter", 4));
+            regions.add(atlas.findRegion("anim_bunny_copter", 5));
+            animCopterRotate = new Animation(1.0f / 15.0f, regions);
         }
     }
 
@@ -112,9 +137,19 @@ public class Assets implements Disposable, AssetErrorListener {
 
     public class AssetGoldCoin {
         public final AtlasRegion goldCoin;
+        public final Animation animGoldCoin;
 
         public AssetGoldCoin(TextureAtlas atlas) {
             goldCoin = atlas.findRegion("item_gold_coin");
+
+            // Animation: Gold Coin
+            Array<AtlasRegion> regions =
+                    atlas.findRegions("anim_gold_coin");
+            AtlasRegion region = regions.first();
+            for (int i = 0; i < 10; i++)
+                regions.insert(0, region);
+            animGoldCoin = new Animation(1.0f / 20.0f, regions,
+                    Animation.PlayMode.LOOP_PINGPONG);
         }
     }
 
@@ -186,7 +221,7 @@ public class Assets implements Disposable, AssetErrorListener {
             jump = am.get("sounds/jump.wav", Sound.class);
             jumpWithFeather = am.get("sounds/jump_with_feather.wav", Sound.class);
             pickupCoin = am.get("sounds/pickup_coin.wav", Sound.class);
-            pickupFeather = am.get("sounds/pickup_feather.wav",Sound.class);
+            pickupFeather = am.get("sounds/pickup_feather.wav", Sound.class);
             liveLost = am.get("sounds/live_lost.wav", Sound.class);
         }
     }
@@ -195,7 +230,7 @@ public class Assets implements Disposable, AssetErrorListener {
         public final Music song01;
 
         public AssetMusic(AssetManager am) {
-            song01 = am.get("music/keith303_-_brand_new_highscore.mp3",Music.class);
+            song01 = am.get("music/keith303_-_brand_new_highscore.mp3", Music.class);
         }
     }
 
